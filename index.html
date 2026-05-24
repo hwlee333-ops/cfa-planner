@@ -912,12 +912,17 @@ function adj(id, delta) {
 
 function getWeekStart() {
   const now = new Date();
+  const start = new Date("2026-05-25");
+  // 5/25 이전이면 5/25 주 고정
+  if (now < start) return start;
+  // 이후면 해당 주 월요일 계산
   const day = now.getDay();
   const diff = (day===0?-6:1)-day;
   const mon = new Date(now);
   mon.setDate(now.getDate()+diff);
   mon.setHours(0,0,0,0);
-  return mon;
+  // 5/25보다 이전 주면 5/25 반환
+  return mon < start ? start : mon;
 }
 
 function renderChecklist() {
