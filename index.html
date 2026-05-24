@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CFA L1 플래너</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181b;
+    --surface2: #222226;
+    --border: #2e2e33;
+    --text: #e4e4e7;
+    --text-muted: #71717a;
+    --text-dim: #3f3f46;
+    --accent: #7dd3fc;
+    --accent2: #38bdf8;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --green: #4ade80;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Pretendard', -apple-system, sans-serif;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: var(–sans);
+min-height: 100vh;
+padding-bottom: 80px;
+}
+
+/* HEADER */
+.header {
+position: sticky;
+top: 0;
+z-index: 100;
+background: rgba(14,14,16,0.92);
+backdrop-filter: blur(16px);
+border-bottom: 1px solid var(–border);
+padding: 16px 20px 14px;
+}
+
+.header-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 12px;
+}
+
+.logo {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–accent);
+letter-spacing: 0.15em;
+text-transform: uppercase;
+}
+
+.exam-badge {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+letter-spacing: 0.1em;
+}
+
+.exam-date {
+color: var(–accent);
+font-weight: 500;
+}
+
+/* PROGRESS BAR */
+.progress-wrap {
+background: var(–surface2);
+border-radius: 4px;
+height: 6px;
+overflow: hidden;
+margin-bottom: 8px;
+}
+
+.progress-bar {
+height: 100%;
+background: linear-gradient(90deg, var(–accent2), var(–accent));
+border-radius: 4px;
+transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.progress-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.progress-text {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-muted);
+}
+
+.progress-pct {
+font-family: var(–mono);
+font-size: 13px;
+color: var(–accent);
+font-weight: 500;
+}
+
+/* NAV TABS */
+.tabs {
+display: flex;
+gap: 4px;
+padding: 12px 20px 0;
+border-bottom: 1px solid var(–border);
+background: rgba(14,14,16,0.92);
+backdrop-filter: blur(16px);
+position: sticky;
+top: 89px;
+z-index: 99;
+}
+
+.tab {
+padding: 8px 14px;
+font-size: 12px;
+font-weight: 500;
+color: var(–text-muted);
+border-bottom: 2px solid transparent;
+cursor: pointer;
+letter-spacing: 0.02em;
+transition: all 0.2s;
+white-space: nowrap;
+}
+
+.tab.active {
+color: var(–accent);
+border-bottom-color: var(–accent);
+}
+
+/* SECTIONS */
+.section { display: none; padding: 20px; }
+.section.active { display: block; }
+
+/* SUBJECT CARDS */
+.section-title {
+font-family: var(–mono);
+font-size: 10px;
+letter-spacing: 0.15em;
+color: var(–text-dim);
+text-transform: uppercase;
+margin-bottom: 14px;
+}
+
+.subject-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 10px;
+transition: border-color 0.2s;
+}
+
+.subject-card:active { border-color: var(–accent); }
+
+.subject-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+
+.subject-left {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.signal {
+width: 10px;
+height: 10px;
+border-radius: 50%;
+flex-shrink: 0;
+box-shadow: 0 0 8px currentColor;
+}
+
+.signal.red { background: var(–red); color: var(–red); }
+.signal.yellow { background: var(–yellow); color: var(–yellow); }
+.signal.green { background: var(–green); color: var(–green); }
+
+.subject-name {
+font-size: 14px;
+font-weight: 600;
+color: var(–text);
+}
+
+.subject-right {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.weight-badge {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+background: var(–surface2);
+padding: 3px 7px;
+border-radius: 4px;
+}
+
+.lecture-count {
+font-family: var(–mono);
+font-size: 11px;
+color: var(–text-muted);
+}
+
+.subject-progress {
+background: var(–surface2);
+border-radius: 3px;
+height: 4px;
+overflow: hidden;
+margin-bottom: 8px;
+}
+
+.subject-bar {
+height: 100%;
+border-radius: 3px;
+transition: width 0.4s ease;
+}
+
+.subject-bar.red { background: var(–red); }
+.subject-bar.yellow { background: var(–yellow); }
+.subject-bar.green { background: var(–green); }
+
+.subject-meta {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.subject-deadline {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+}
+
+.subject-done {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+}
+
+.status-btn {
+font-size: 10px;
+padding: 4px 10px;
+border-radius: 6px;
+border: 1px solid var(–border);
+background: var(–surface2);
+color: var(–text-muted);
+cursor: pointer;
+font-family: var(–mono);
+transition: all 0.2s;
+}
+
+.status-btn:active { transform: scale(0.95); }
+
+/* CHECKLIST */
+.week-label {
+font-family: var(–mono);
+font-size: 10px;
+letter-spacing: 0.12em;
+color: var(–text-dim);
+text-transform: uppercase;
+margin: 18px 0 10px;
+}
+
+.week-label:first-child { margin-top: 0; }
+
+.day-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 14px;
+margin-bottom: 8px;
+}
+
+.day-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+
+.day-name {
+font-size: 13px;
+font-weight: 600;
+color: var(–text);
+}
+
+.day-quota {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+}
+
+.lecture-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 0;
+border-bottom: 1px solid var(–border);
+cursor: pointer;
+}
+
+.lecture-item:last-child { border-bottom: none; }
+
+.checkbox {
+width: 18px;
+height: 18px;
+border: 1.5px solid var(–border);
+border-radius: 4px;
+flex-shrink: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+}
+
+.checkbox.checked {
+background: var(–accent);
+border-color: var(–accent);
+}
+
+.checkbox.checked::after {
+content: ‘’;
+width: 10px;
+height: 7px;
+border-left: 2px solid #000;
+border-bottom: 2px solid #000;
+transform: rotate(-45deg) translateY(-1px);
+display: block;
+}
+
+.lecture-text {
+font-size: 13px;
+color: var(–text);
+flex: 1;
+transition: color 0.2s;
+}
+
+.lecture-text.done {
+color: var(–text-dim);
+text-decoration: line-through;
+}
+
+.lecture-tag {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+background: var(–surface2);
+padding: 2px 6px;
+border-radius: 3px;
+}
+
+/* MEMO */
+.memo-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 12px;
+}
+
+.memo-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 12px;
+}
+
+.memo-title {
+font-size: 13px;
+font-weight: 600;
+color: var(–text);
+}
+
+.memo-date {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+}
+
+.memo-textarea {
+width: 100%;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 12px;
+color: var(–text);
+font-family: var(–sans);
+font-size: 13px;
+line-height: 1.6;
+resize: none;
+min-height: 100px;
+outline: none;
+transition: border-color 0.2s;
+}
+
+.memo-textarea:focus { border-color: var(–accent); }
+.memo-textarea::placeholder { color: var(–text-dim); }
+
+.save-btn {
+margin-top: 10px;
+width: 100%;
+padding: 10px;
+background: var(–accent);
+color: #000;
+border: none;
+border-radius: 8px;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+font-family: var(–sans);
+transition: opacity 0.2s;
+}
+
+.save-btn:active { opacity: 0.8; }
+
+.saved-memos {
+margin-top: 16px;
+}
+
+.memo-item {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 8px;
+padding: 12px;
+margin-bottom: 8px;
+position: relative;
+}
+
+.memo-item-subject {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–accent);
+margin-bottom: 4px;
+}
+
+.memo-item-text {
+font-size: 13px;
+color: var(–text);
+line-height: 1.5;
+white-space: pre-wrap;
+}
+
+.memo-item-date {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-dim);
+margin-top: 6px;
+}
+
+.delete-btn {
+position: absolute;
+top: 10px;
+right: 10px;
+background: none;
+border: none;
+color: var(–text-dim);
+font-size: 16px;
+cursor: pointer;
+padding: 2px 6px;
+line-height: 1;
+}
+
+/* STATS */
+.stats-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+margin-bottom: 16px;
+}
+
+.stat-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px;
+text-align: center;
+}
+
+.stat-value {
+font-family: var(–mono);
+font-size: 24px;
+font-weight: 500;
+color: var(–accent);
+display: block;
+margin-bottom: 4px;
+}
+
+.stat-label {
+font-size: 11px;
+color: var(–text-muted);
+}
+
+.timeline-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px;
+margin-bottom: 10px;
+}
+
+.timeline-row {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 8px 0;
+border-bottom: 1px solid var(–border);
+}
+
+.timeline-row:last-child { border-bottom: none; }
+
+.timeline-left {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.timeline-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: var(–accent);
+flex-shrink: 0;
+}
+
+.timeline-dot.past { background: var(–text-dim); }
+.timeline-dot.current { background: var(–yellow); box-shadow: 0 0 8px var(–yellow); }
+
+.timeline-phase {
+font-size: 12px;
+color: var(–text);
+font-weight: 500;
+}
+
+.timeline-date {
+font-family: var(–mono);
+font-size: 10px;
+color: var(–text-muted);
+}
+
+/* D-DAY */
+.dday-banner {
+background: linear-gradient(135deg, #0f1f2e, #0a1628);
+border: 1px solid #1e3a5f;
+border-radius: 12px;
+padding: 20px;
+text-align: center;
+margin-bottom: 16px;
+}
+
+.dday-label {
+font-family: var(–mono);
+font-size: 10px;
+letter-spacing: 0.15em;
+color: var(–accent);
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+
+.dday-number {
+font-family: var(–mono);
+font-size: 48px;
+font-weight: 500;
+color: var(–accent);
+line-height: 1;
+margin-bottom: 4px;
+}
+
+.dday-sub {
+font-size: 12px;
+color: var(–text-muted);
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
+background: rgba(14,14,16,0.95);
+backdrop-filter: blur(20px);
+border-top: 1px solid var(–border);
+display: flex;
+padding: 10px 0 20px;
+z-index: 100;
+}
+
+.nav-btn {
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+padding: 6px;
+cursor: pointer;
+border: none;
+background: none;
+color: var(–text-dim);
+transition: color 0.2s;
+}
+
+.nav-btn.active { color: var(–accent); }
+
+.nav-icon { font-size: 20px; }
+.nav-label { font-size: 10px; font-family: var(–mono); }
+
+/* SELECT */
+select {
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–text);
+border-radius: 6px;
+padding: 6px 10px;
+font-size: 12px;
+font-family: var(–sans);
+outline: none;
+width: 100%;
+margin-bottom: 10px;
+}
+
+.add-lecture-btn {
+width: 100%;
+padding: 10px;
+background: var(–surface2);
+border: 1px dashed var(–border);
+border-radius: 8px;
+color: var(–text-muted);
+font-size: 12px;
+cursor: pointer;
+font-family: var(–sans);
+margin-top: 8px;
+transition: all 0.2s;
+}
+
+.add-lecture-btn:active { border-color: var(–accent); color: var(–accent); }
+</style>
+
+</head>
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+  <div class="header-top">
+    <span class="logo">CFA L1 · 2026</span>
+    <span class="exam-badge">시험 <span class="exam-date">11.13</span></span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="globalBar"></div>
+  </div>
+  <div class="progress-label">
+    <span class="progress-text" id="globalText">0 / 172 강의 완료</span>
+    <span class="progress-pct" id="globalPct">0%</span>
+  </div>
+</div>
+
+<!-- TABS -->
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('overview')">과목</div>
+  <div class="tab" onclick="showTab('checklist')">체크리스트</div>
+  <div class="tab" onclick="showTab('memo')">복습메모</div>
+  <div class="tab" onclick="showTab('stats')">통계</div>
+</div>
+
+<!-- OVERVIEW TAB -->
+
+<div class="section active" id="tab-overview">
+  <p class="section-title">과목별 진도</p>
+  <div id="subjectList"></div>
+</div>
+
+<!-- CHECKLIST TAB -->
+
+<div class="section" id="tab-checklist">
+  <p class="section-title">이번 주 강의</p>
+  <div id="checklistContent"></div>
+</div>
+
+<!-- MEMO TAB -->
+
+<div class="section" id="tab-memo">
+  <p class="section-title">복습 메모</p>
+  <div class="memo-card">
+    <div class="memo-header">
+      <span class="memo-title">새 메모 추가</span>
+      <span class="memo-date" id="memoDate"></span>
+    </div>
+    <select id="memoSubject">
+      <option value="">과목 선택</option>
+      <option>FSA</option>
+      <option>Equity</option>
+      <option>Fixed Income</option>
+      <option>Ethics</option>
+      <option>Quant</option>
+      <option>Corp. Issuers</option>
+      <option>Economics</option>
+      <option>Portfolio</option>
+      <option>Alt. Investments</option>
+      <option>Derivatives</option>
+    </select>
+    <textarea class="memo-textarea" id="memoInput" placeholder="오늘 배운 핵심 개념, 헷갈린 부분, 외울 공식 등을 자유롭게 메모해..."></textarea>
+    <button class="save-btn" onclick="saveMemo()">저장</button>
+  </div>
+  <div class="saved-memos" id="savedMemos"></div>
+</div>
+
+<!-- STATS TAB -->
+
+<div class="section" id="tab-stats">
+  <div class="dday-banner">
+    <div class="dday-label">시험까지</div>
+    <div class="dday-number" id="ddayNum">—</div>
+    <div class="dday-sub">2026년 11월 13일</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-value" id="statDone">0</span>
+      <span class="stat-label">완료 강의</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="statLeft">172</span>
+      <span class="stat-label">남은 강의</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="statWeeks">—</span>
+      <span class="stat-label">남은 주</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="statPace">10</span>
+      <span class="stat-label">주당 목표</span>
+    </div>
+  </div>
+
+  <p class="section-title" style="margin-bottom:10px">플랜 타임라인</p>
+  <div class="timeline-card">
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot current"></div>
+        <span class="timeline-phase">1회독 (인강)</span>
+      </div>
+      <span class="timeline-date">5/23 → 9/19</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot"></div>
+        <span class="timeline-phase">문제풀이 (Qbank)</span>
+      </div>
+      <span class="timeline-date">9/20 → 10/31</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot"></div>
+        <span class="timeline-phase">모의고사 + 마무리</span>
+      </div>
+      <span class="timeline-date">11/1 → 11/12</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent)"></div>
+        <span class="timeline-phase" style="color:var(--accent);font-weight:700">🎯 CFA L1 시험</span>
+      </div>
+      <span class="timeline-date" style="color:var(--accent)">11/13</span>
+    </div>
+  </div>
+
+  <p class="section-title" style="margin:16px 0 10px">주간 루틴</p>
+  <div class="timeline-card">
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">월 · 출근길 1개 + 귀가 후 복습</span></div><span class="timeline-date">1개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">화 · 출퇴근 1개 + 귀가 후 1개</span></div><span class="timeline-date">2개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">수 · 출퇴근 1개 + 운동 후 1개</span></div><span class="timeline-date">2개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">목 · 데이트 🗓</span></div><span class="timeline-date">0개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">금 · 출퇴근 1개</span></div><span class="timeline-date">1개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">토 · 집중 공부</span></div><span class="timeline-date">3개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase">일 · 교회 후 오후</span></div><span class="timeline-date">1개</span></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const SUBJECTS = [
+  { id:'fra',   name:'FSA',            total:24, weight:'11-14%', deadline:'6/13', color:'red' },
+  { id:'eq',    name:'Equity',         total:21, weight:'11-14%', deadline:'6/27', color:'red' },
+  { id:'fi',    name:'Fixed Income',   total:29, weight:'11-14%', deadline:'7/18', color:'red' },
+  { id:'eth',   name:'Ethics',         total:15, weight:'15-20%', deadline:'8/1',  color:'red' },
+  { id:'qm',    name:'Quant',          total:20, weight:'6-9%',   deadline:'8/15', color:'red' },
+  { id:'corp',  name:'Corp. Issuers',  total:13, weight:'6-9%',   deadline:'8/25', color:'red' },
+  { id:'econ',  name:'Economics',      total:14, weight:'6-9%',   deadline:'9/5',  color:'red' },
+  { id:'port',  name:'Portfolio',      total:11, weight:'8-12%',  deadline:'9/19', color:'red' },
+  { id:'alt',   name:'Alt. Investments',total:10,weight:'7-10%',  deadline:'9/19', color:'red' },
+  { id:'deriv', name:'Derivatives',    total:15, weight:'5-8%',   deadline:'9/19', color:'red' },
+];
+
+const DAYS = ['월','화','수','목','금','토','일'];
+const DAY_QUOTA = [1,2,2,0,1,3,1];
+
+function getState() {
+  try { return JSON.parse(localStorage.getItem('cfaState') || '{}'); } catch { return {}; }
+}
+function setState(s) { localStorage.setItem('cfaState', JSON.stringify(s)); }
+
+function getCompleted() {
+  const s = getState();
+  return s.completed || {};
+}
+function setCompleted(c) {
+  const s = getState(); s.completed = c; setState(s);
+}
+function getMemos() {
+  const s = getState(); return s.memos || [];
+}
+function setMemos(m) {
+  const s = getState(); s.memos = m; setState(s);
+}
+function getChecks() {
+  const s = getState(); return s.checks || {};
+}
+function setChecks(c) {
+  const s = getState(); s.checks = c; setState(s);
+}
+
+// ── GLOBAL PROGRESS ───────────────────────────────────
+function updateGlobal() {
+  const comp = getCompleted();
+  let done = 0;
+  SUBJECTS.forEach(s => { done += (comp[s.id] || 0); });
+  const total = 172;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('globalBar').style.width = pct + '%';
+  document.getElementById('globalText').textContent = `${done} / ${total} 강의 완료`;
+  document.getElementById('globalPct').textContent = pct + '%';
+
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statLeft').textContent = total - done;
+}
+
+// ── SUBJECT LIST ──────────────────────────────────────
+function renderSubjects() {
+  const comp = getCompleted();
+  const el = document.getElementById('subjectList');
+  el.innerHTML = '';
+  SUBJECTS.forEach(s => {
+    const done = comp[s.id] || 0;
+    const pct = Math.round(done / s.total * 100);
+    let signal = 'red', statusText = '미시작';
+    if (done > 0 && done < s.total) { signal = 'yellow'; statusText = '진행중'; }
+    if (done >= s.total) { signal = 'green'; statusText = '완료'; }
+
+    el.innerHTML += `
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-left">
+          <div class="signal ${signal}"></div>
+          <span class="subject-name">${s.name}</span>
+        </div>
+        <div class="subject-right">
+          <span class="weight-badge">${s.weight}</span>
+        </div>
+      </div>
+      <div class="subject-progress">
+        <div class="subject-bar ${signal}" style="width:${pct}%"></div>
+      </div>
+      <div class="subject-meta">
+        <span class="subject-deadline">목표 ${s.deadline}</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="subject-done">${done}/${s.total}</span>
+          <button class="status-btn" onclick="adjustLecture('${s.id}', -1)">−</button>
+          <button class="status-btn" onclick="adjustLecture('${s.id}', 1)" style="color:var(--accent);border-color:var(--accent)">+</button>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+function adjustLecture(id, delta) {
+  const comp = getCompleted();
+  const subj = SUBJECTS.find(s => s.id === id);
+  const cur = comp[id] || 0;
+  comp[id] = Math.max(0, Math.min(subj.total, cur + delta));
+  setCompleted(comp);
+  renderSubjects();
+  updateGlobal();
+}
+
+// ── CHECKLIST ─────────────────────────────────────────
+function getWeekStart() {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = (day === 0 ? -6 : 1) - day;
+  const mon = new Date(now);
+  mon.setDate(now.getDate() + diff);
+  mon.setHours(0,0,0,0);
+  return mon;
+}
+
+function renderChecklist() {
+  const checks = getChecks();
+  const weekStart = getWeekStart();
+  const el = document.getElementById('checklistContent');
+  el.innerHTML = '';
+
+  const comp = getCompleted();
+  // figure out current subject
+  let cumulative = 0;
+  let currentSubj = SUBJECTS[0];
+  for (const s of SUBJECTS) {
+    if (cumulative + s.total > (comp[s.id] || 0)) { currentSubj = s; break; }
+    cumulative += s.total;
+  }
+
+  DAYS.forEach((day, i) => {
+    const date = new Date(weekStart);
+    date.setDate(weekStart.getDate() + i);
+    const dateStr = `${date.getMonth()+1}/${date.getDate()}`;
+    const quota = DAY_QUOTA[i];
+
+    if (quota === 0) {
+      el.innerHTML += `
+      <div class="week-label">${day}요일 · ${dateStr}</div>
+      <div class="day-card">
+        <div style="text-align:center;padding:8px 0;color:var(--text-dim);font-size:12px">😴 오늘은 쉬는 날</div>
+      </div>`;
+      return;
+    }
+
+    let items = '';
+    for (let j = 0; j < quota; j++) {
+      const key = `${dateStr}-${j}`;
+      const checked = checks[key] || false;
+      items += `
+      <div class="lecture-item" onclick="toggleCheck('${key}')">
+        <div class="checkbox ${checked ? 'checked' : ''}"></div>
+        <span class="lecture-text ${checked ? 'done' : ''}">${currentSubj.name} 강의 ${j+1}</span>
+        <span class="lecture-tag">${i < 5 ? (j===0?'출퇴근':'귀가후') : (i===5?'토요일':'오후')}</span>
+      </div>`;
+    }
+
+    el.innerHTML += `
+    <div class="week-label">${day}요일 · ${dateStr}</div>
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-name"></span>
+        <span class="day-quota">목표 ${quota}개</span>
+      </div>
+      ${items}
+    </div>`;
+  });
+}
+
+function toggleCheck(key) {
+  const checks = getChecks();
+  checks[key] = !checks[key];
+  setChecks(checks);
+  renderChecklist();
+}
+
+// ── MEMO ─────────────────────────────────────────────
+function setMemoDate() {
+  const now = new Date();
+  document.getElementById('memoDate').textContent =
+    `${now.getMonth()+1}/${now.getDate()}`;
+}
+
+function saveMemo() {
+  const subj = document.getElementById('memoSubject').value;
+  const text = document.getElementById('memoInput').value.trim();
+  if (!text) return;
+  const memos = getMemos();
+  const now = new Date();
+  memos.unshift({
+    subject: subj || '기타',
+    text,
+    date: `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`
+  });
+  setMemos(memos);
+  document.getElementById('memoInput').value = '';
+  renderMemos();
+}
+
+function deleteMemo(idx) {
+  const memos = getMemos();
+  memos.splice(idx, 1);
+  setMemos(memos);
+  renderMemos();
+}
+
+function renderMemos() {
+  const memos = getMemos();
+  const el = document.getElementById('savedMemos');
+  if (!memos.length) { el.innerHTML = '<p style="color:var(--text-dim);font-size:12px;text-align:center;padding:20px">아직 메모가 없어</p>'; return; }
+  el.innerHTML = memos.map((m,i) => `
+  <div class="memo-item">
+    <div class="memo-item-subject">${m.subject}</div>
+    <div class="memo-item-text">${m.text}</div>
+    <div class="memo-item-date">${m.date}</div>
+    <button class="delete-btn" onclick="deleteMemo(${i})">×</button>
+  </div>`).join('');
+}
+
+// ── STATS ─────────────────────────────────────────────
+function updateStats() {
+  const exam = new Date('2026-11-13');
+  const now = new Date();
+  const diff = Math.ceil((exam - now) / (1000*60*60*24));
+  document.getElementById('ddayNum').textContent = diff > 0 ? diff : 'D-Day!';
+  const weeks = Math.ceil(diff / 7);
+  document.getElementById('statWeeks').textContent = weeks;
+}
+
+// ── TABS ──────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = ['overview','checklist','memo','stats'];
+  const idx = tabs.indexOf(name);
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+}
+
+// ── INIT ──────────────────────────────────────────────
+renderSubjects();
+updateGlobal();
+renderChecklist();
+setMemoDate();
+renderMemos();
+updateStats();
+</script>
+
+</body>
+</html>
