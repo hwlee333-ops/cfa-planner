@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -686,8 +685,93 @@ select {
   font-size: 14px;
   font-weight: 500;
 }
-</style>
 
+/* ROUTINE */
+.routine-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.routine-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.routine-icon { font-size: 18px; }
+
+.routine-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.routine-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.routine-item:last-child { border-bottom: none; }
+.routine-item:active { background: var(--surface2); }
+.routine-item.done { opacity: 0.45; }
+
+.r-check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.routine-item.done .r-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.routine-item.done .r-check::after {
+  content: '';
+  width: 11px;
+  height: 7px;
+  border-left: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+
+.r-action {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.r-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.routine-item.done .r-action {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+</style>
 </head>
 <body>
 
@@ -710,6 +794,7 @@ select {
   <div class="tab" onclick="showTab('checklist')">체크리스트</div>
   <div class="tab" onclick="showTab('memo')">복습메모</div>
   <div class="tab" onclick="showTab('stats')">통계</div>
+  <div class="tab" onclick="showTab('routine')">루틴</div>
 </div>
 
 <div class="section active" id="tab-overview">
@@ -778,14 +863,14 @@ select {
         <div class="timeline-dot current"></div>
         <span class="timeline-phase">1회독 (인강)</span>
       </div>
-      <span class="timeline-date">5/23 → 9/19</span>
+      <span class="timeline-date">7/5 → 9/13</span>
     </div>
     <div class="timeline-row">
       <div class="timeline-left">
         <div class="timeline-dot"></div>
         <span class="timeline-phase">문제풀이 (Qbank)</span>
       </div>
-      <span class="timeline-date">9/20 → 10/31</span>
+      <span class="timeline-date">9/14 → 10/31</span>
     </div>
     <div class="timeline-row">
       <div class="timeline-left">
@@ -805,13 +890,13 @@ select {
 
   <p class="section-title" style="margin:16px 0 10px">주간 루틴</p>
   <div class="timeline-card">
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">월 · 출근길 1개 + 귀가 후 복습</span></div><span class="timeline-date">1개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">월 · 출퇴근 1개 + 귀가 후 2개</span></div><span class="timeline-date">3개</span></div>
     <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">화 · 출퇴근 1개 + 귀가 후 1개</span></div><span class="timeline-date">2개</span></div>
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">수 · 출퇴근 1개 + 운동 후 1개</span></div><span class="timeline-date">2개</span></div>
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot"></div><span class="timeline-phase" style="color:var(--text-muted)">목 · 데이트 🗓</span></div><span class="timeline-date">0개</span></div>
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">금 · 출퇴근 1개</span></div><span class="timeline-date">1개</span></div>
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">토 · 집중 공부</span></div><span class="timeline-date">3개</span></div>
-    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">일 · 교회 후 오후</span></div><span class="timeline-date">1개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">수 · 출퇴근 1개 + 회사오전 1개 + 운동 후 1개</span></div><span class="timeline-date">3개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">목 · 출퇴근 1개</span></div><span class="timeline-date">1개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">금 · 집중 3개</span></div><span class="timeline-date">3개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">토 · 집중 공부</span></div><span class="timeline-date">4개</span></div>
+    <div class="timeline-row"><div class="timeline-left"><div class="timeline-dot active"></div><span class="timeline-phase">일 · 교회 후 오후</span></div><span class="timeline-date">2개</span></div>
   </div>
 </div>
 
@@ -830,15 +915,15 @@ const SUBJECTS = [
 ];
 
 const DAYS = ['월','화','수','목','금','토','일'];
-const DAY_QUOTA = [1,2,2,0,1,3,1];
+const DAY_QUOTA = [3,2,3,1,3,4,2];
 const DAY_LABELS = [
-  ['출퇴근'],
+  ['출퇴근','귀가후','귀가후'],
   ['출퇴근','귀가후'],
-  ['출퇴근','운동후'],
-  [],
+  ['출퇴근','회사오전','운동후'],
   ['출퇴근'],
-  ['토요일','토요일','토요일'],
-  ['오후']
+  ['출퇴근','귀가후','귀가후'],
+  ['토요일','토요일','토요일','토요일'],
+  ['오후','오후']
 ];
 
 function getState() {
@@ -1029,11 +1114,16 @@ function updateStats() {
   document.getElementById('statWeeks').textContent = Math.ceil(diff/7);
 }
 
+
+function toggleRoutine(el) {
+  el.classList.toggle('done');
+}
+
 function showTab(name) {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  const tabs=['overview','checklist','memo','stats'];
+  const tabs=['overview','checklist','memo','stats','routine'];
   document.querySelectorAll('.tab')[tabs.indexOf(name)].classList.add('active');
 }
 
@@ -1043,6 +1133,211 @@ renderChecklist();
 renderMemos();
 updateStats();
 </script>
+
+<div class="section" id="tab-routine">
+  <p class="section-title">일별 루틴</p>
+
+  <div class="routine-card">
+    <div class="routine-header">
+      <span class="routine-icon">🚇</span>
+      <span class="routine-title">출근길</span>
+    </div>
+    <div class="routine-items">
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">NotebookLM 오디오 복습 듣기</div>
+          <div class="r-desc">전날 강의 핵심 개념 오디오 재생</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">질문 나오면 속으로 답하기</div>
+          <div class="r-desc">능동적으로 듣기</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card">
+    <div class="routine-header">
+      <span class="routine-icon">🏢</span>
+      <span class="routine-title">회사 / 집 — 강의</span>
+    </div>
+    <div class="routine-items">
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">새 강의 듣기</div>
+          <div class="r-desc">이패스 인강 — 가능하면 녹음</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">강의 끝나고 NotebookLM 업로드</div>
+          <div class="r-desc">녹음 또는 슈웨저 PDF 업로드</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card">
+    <div class="routine-header">
+      <span class="routine-icon">⚡</span>
+      <span class="routine-title">강의 직후</span>
+    </div>
+    <div class="routine-items">
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">NotebookLM 요약 생성</div>
+          <div class="r-desc">자료 기반 핵심 요약 만들기</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">Claude로 정리본 압축</div>
+          <div class="r-desc">비교표 / 개념 정리 요청</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">ChatGPT로 문제 10~15개 풀기</div>
+          <div class="r-desc">오답은 바로 확인 및 메모</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card">
+    <div class="routine-header">
+      <span class="routine-icon">🌙</span>
+      <span class="routine-title">자기 전 10분</span>
+    </div>
+    <div class="routine-items">
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">틀린 문제 3개 다시 보기</div>
+          <div class="r-desc">오답노트 or 복습메모 확인</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">공식 / 정의만 훑기</div>
+          <div class="r-desc">슈웨저 Summary 페이지</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">내일 들을 강의 확인</div>
+          <div class="r-desc">체크리스트 탭에서 확인</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="routine-card">
+    <div class="routine-header">
+      <span class="routine-icon">📅</span>
+      <span class="routine-title">주말 루틴</span>
+    </div>
+    <div class="routine-items">
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">밀린 강의 처리</div>
+          <div class="r-desc">이번 주 미완료 강의 완주</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">NotebookLM 주간 요약 모으기</div>
+          <div class="r-desc">이번 주 전체 오디오 훑기</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">Claude로 주간 요약본 만들기</div>
+          <div class="r-desc">이번 주 배운 개념 압축 정리 요청</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">ChatGPT로 혼합 문제 40~60개</div>
+          <div class="r-desc">이번 주 전 과목 랜덤 문제</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">오답노트 정리</div>
+          <div class="r-desc">복습메모 탭에 핵심 오답 기록</div>
+        </div>
+      </div>
+      <div class="routine-item" onclick="toggleRoutine(this)">
+        <div class="r-check"></div>
+        <div class="r-content">
+          <div class="r-action">다음 주 계획 조정</div>
+          <div class="r-desc">과목 진도 확인 + 목표 수정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title" style="margin:20px 0 10px">AI 툴 분업</p>
+  <div class="timeline-card">
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot active"></div>
+        <span class="timeline-phase">이패스 인강 + 슈웨저</span>
+      </div>
+      <span class="timeline-date">이해 시작</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot active"></div>
+        <span class="timeline-phase">NotebookLM</span>
+      </div>
+      <span class="timeline-date">기억 보조</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot active"></div>
+        <span class="timeline-phase">Claude</span>
+      </div>
+      <span class="timeline-date">정리 압축</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot active"></div>
+        <span class="timeline-phase">ChatGPT</span>
+      </div>
+      <span class="timeline-date">문제화</span>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-left">
+        <div class="timeline-dot exam"></div>
+        <span class="timeline-phase" style="color:var(--accent)">Qbank / CFAI Mock</span>
+      </div>
+      <span class="timeline-date" style="color:var(--accent)">실전 검증</span>
+    </div>
+  </div>
+
+  <div style="background:var(--accent-light);border:1.5px solid var(--accent);border-radius:12px;padding:16px;margin-top:12px;">
+    <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px">⚠️ 제일 중요한 원칙</div>
+    <div style="font-size:13px;color:var(--text);line-height:1.7">AI 문제는 훈련용.<br>최종 실전 감각은 반드시<br><strong>CFAI 문제 / Qbank / Mock</strong>으로 잡기!</div>
+  </div>
+</div>
 
 </body>
 </html>
